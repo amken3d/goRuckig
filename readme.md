@@ -37,7 +37,7 @@ make
 Check the build directory. You should now have a libruckig.a file
 You can now move to using goRuckig in your Go project as described below.
 
-###Using goRuckig
+### Using goRuckig
 
 To use `goRuckig` in your Go project, first install the package using:
 ```bash
