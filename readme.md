@@ -1,3 +1,4 @@
+
 # goRuckig
 
 `goRuckig` is a Go package that provides real-time motion planning capabilities using the Ruckig library. This package allows developers to calculate smooth and efficient trajectories with specified constraints, making it ideal for applications such as robotics, CNC machines, and pick-and-place systems.
@@ -9,9 +10,38 @@
 - Efficient performance for high-speed applications
 
 ## Installation
+Start by cloning the repo
+```bash
+git clone www.github.com/amken3d/goRuckig.git
+cd goRuckig
+git submodule update --init --recursive
+```
+The ruckig folder should now have the latest ruckig code
+Edit the CMakeLists.txt file using your favorite editor and turn off these options
+```
+option(BUILD_EXAMPLES "Build example programs" OFF)
+option(BUILD_PYTHON_MODULE "Build Python wrapper with nanobind" OFF)
+option(BUILD_CLOUD_CLIENT "Build cloud client to calculate Ruckig Pro trajectories remotely" OFF)
+option(BUILD_TESTS "Build tests" OFF)
+option(BUILD_BENCHMARK "Build benchmark" OFF)
+option(BUILD_SHARED_LIBS "Build as shared library" OFF)
+```
+Save the file and run 
+
+```bash
+mkdir -p build
+cd build
+cmake -DCMAKE_BUILD_TYPE=Release ..
+make
+```
+Check the build directory. You should now have a libruckig.a file
+You can now move to using goRuckig in your Go project as described below.
+
+### Using goRuckig
+
 To use `goRuckig` in your Go project, first install the package using:
 ```bash
-go get github.com/amken3d/goRabbitPnP/gRHost/pkg/goRuckig
+go get github.com/amken3d/goRuckig
 
 ```
 Getting Started
@@ -24,7 +54,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/amken3d/goRabbitPnP/gRHost/pkg/goRuckig"
+	"github.com/amken3d/goRuckig"
 )
 
 func main() {
@@ -83,10 +113,7 @@ These cases will help ensure your motion planning is robust and reliable.
 The package includes a performance test to measure how efficiently Ruckig can generate trajectory updates. The performance test results, such as 1447 updates in 514.9µs, demonstrate the high efficiency of the Ruckig library.
 
 ```go
-GOROOT=C:\Users\hkeni\go\go1.23.2 #gosetup
-GOPATH=C:\Users\hkeni\go #gosetup
-C:\Users\hkeni\go\go1.23.2\bin\go.exe test -c -o C:\Users\hkeni\AppData\Local\JetBrains\GoLand2024.2\tmp\GoLand\___goRuckig_test_go.test.exe github.com/amken3d/goRabbitPnP/gRHost/pkg/goRuckig #gosetup
-C:\Users\hkeni\go\go1.23.2\bin\go.exe tool test2json -t C:\Users\hkeni\AppData\Local\JetBrains\GoLand2024.2\tmp\GoLand\___goRuckig_test_go.test.exe -test.v=test2json -test.paniconexit0 -test.run ^\QTestRuckigTrajectory\E|\QTestRuckigEdgeCases\E|\QTestRuckigAdditionalEdgeCases\E|\QTestRuckigPerformance\E$ #gosetup
+
 === RUN   TestRuckigTrajectory
 t | position
 0.01 | [6.666666666666667e-07 -0.021875500000000003 0.4949746666666667]
